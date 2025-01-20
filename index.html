@@ -186,10 +186,64 @@
     </div>
   </div>
 </section>
+<section id="raspi-linux-commands">
+  <h2>Weitere nützliche Raspberry Pi Linux-Befehle</h2>
+
+  <article>
+    <h3>Tree</h3>
+    <p><code>tree</code></p>
+    <p>Zeigt die Verzeichnisstruktur eines Ordners in einer hierarchischen Baumansicht an.</p>
+  </article>
+
+  <article>
+    <h3>WiFi-Einstellungen anzeigen</h3>
+    <p><code>sudo iwconfig</code></p>
+    <p>Zeigt die aktuellen Einstellungen der Wireless-Netzwerkkarte an (z. B. ESSID, Frequenz, Signalstärke).</p>
+  </article>
+
+  <article>
+    <h3>USB-Geräte auflisten</h3>
+    <p><code>lsusb</code></p>
+    <p>Listet alle angeschlossenen USB-Geräte auf.</p>
+  </article>
+
+  <article>
+    <h3>Nmap: Syn-Scan</h3>
+    <p><code>sudo nmap -sS 192.168.1.1</code></p>
+    <p>Führt einen TCP-SYN-Scan auf die IP-Adresse 192.168.1.1 aus, um offene Ports zu erkennen.</p>
+  </article>
+
+  <article>
+    <h3>Nmap: Bestimmte Ports scannen</h3>
+    <p><code>nmap -p 80,139,515 192.168.1.1</code></p>
+    <p>Scannt die Ports 80, 139 und 515 der IP-Adresse 192.168.1.1.</p>
+  </article>
+
+  <article>
+    <h3>Nmap: Netzwerksubnetz scannen</h3>
+    <p><code>nmap -p 80,515 192.168.1.0/24</code></p>
+    <p>Scannt die Ports 80 und 515 für alle Geräte im Subnetz 192.168.1.0/24.</p>
+  </article>
+
+  <article>
+    <h3>Nmap: Umfassender Scan</h3>
+    <p><code>nmap -A 192.168.1.1</code></p>
+    <p>Führt einen umfassenden Scan der IP-Adresse 192.168.1.1 aus und sammelt Systeminformationen.</p>
+  </article>
+
+  <article>
+    <h3>Dateien verschieben</h3>
+    <p><code>mv [optionen] quelle ziel</code></p>
+    <p>Verschiebt Dateien oder Ordner von einer Quelle zu einem Ziel. Beispiel:</p>
+    <p><code>mv test.txt /home/user/Documents</code></p>
+    <p>Verschiebt die Datei <code>test.txt</code> in den Ordner <code>/home/user/Documents</code>.</p>
+  </article>
+
+</section>
 
 
     <footer class="text-center text-gray-600 mt-12">
-      <p>Erstellt von <a href="http://www.millionpainter.de" target="_blank">Millionpainter</a> mit  <span class="text-blue-600">Tailwind CSS</span></p>
+      <p>Erstellt von <a href="http://www.millionpainter.de" target="_blank">Millionpainter</a> mit love & <span class="text-blue-600">Tailwind CSS</span></p>
     </footer>
   </div>
 </body>
