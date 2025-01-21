@@ -1,251 +1,360 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SSH und Netzwerkzugriff lernen</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SSH und Netzwerkzugriff lernen</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
+  <body class="bg-gray-100 text-gray-900 font-sans leading-relaxed">
+    <div class="max-w-4xl mx-auto py-8 px-4">
+      <header class="text-center mb-8">
+        <h1 class="text-4xl font-bold text-blue-600">
+          SSH und Netzwerkzugriff lernen
+        </h1>
+        <p class="text-lg text-gray-700">
+          Eine Übersicht der wichtigsten Befehle und Schritte
+        </p>
+      </header>
 
-<body class="bg-gray-100 text-gray-900 font-sans leading-relaxed">
-  <div class="max-w-4xl mx-auto py-8 px-4">
-    <header class="text-center mb-8">
-      <h1 class="text-4xl font-bold text-blue-600">SSH und Netzwerkzugriff lernen</h1>
-      <p class="text-lg text-gray-700">Eine Übersicht der wichtigsten Befehle und Schritte</p>
-    </header>
-
-    <section>
-      <h2 class="text-2xl font-semibold text-gray-800 mb-4">1. Verbindung per SSH herstellen</h2>
-      <div class="bg-white shadow rounded-lg p-6 mb-6">
-        <p class="text-gray-700 mb-2">Dieser Befehl ermöglicht es dir, eine Verbindung zu deinem Raspberry Pi herzustellen:</p>
-        <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-          ssh benutzername@<span class="text-red-500">hostname_or_ip</span>
+      <section>
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+          1. Verbindung per SSH herstellen
+        </h2>
+        <div class="bg-white shadow rounded-lg p-6 mb-6">
+          <p class="text-gray-700 mb-2">
+            Dieser Befehl ermöglicht es dir, eine Verbindung zu deinem Raspberry
+            Pi herzustellen:
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            ssh benutzername@<span class="text-red-500">hostname_or_ip</span>
+          </div>
+          <p class="mt-2 text-sm text-gray-500">
+            Ersetze <code>benutzername</code> durch deinen Benutzernamen und
+            <code>hostname_or_ip</code> durch die IP-Adresse oder den Hostnamen
+            des Raspberry Pi.
+          </p>
         </div>
-        <p class="mt-2 text-sm text-gray-500">Ersetze <code>benutzername</code> durch deinen Benutzernamen und <code>hostname_or_ip</code> durch die IP-Adresse oder den Hostnamen des Raspberry Pi.</p>
-      </div>
-    </section>
+      </section>
 
-    <section>
-      <h2 class="text-2xl font-semibold text-gray-800 mb-4">2. SSH-Tunnel einrichten</h2>
-      <div class="bg-white shadow rounded-lg p-6 mb-6">
-        <p class="text-gray-700 mb-2">Mit diesem Befehl kannst du einen SSH-Tunnel erstellen, um Zugriff auf die Weboberfläche des Routers zu erhalten:</p>
-        <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-          ssh -L 8080:192.168.1.1:80 benutzername@<span class="text-red-500">hostname_or_ip</span>
+      <section>
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+          2. SSH-Tunnel einrichten
+        </h2>
+        <div class="bg-white shadow rounded-lg p-6 mb-6">
+          <p class="text-gray-700 mb-2">
+            Mit diesem Befehl kannst du einen SSH-Tunnel erstellen, um Zugriff
+            auf die Weboberfläche des Routers zu erhalten:
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            ssh -L 8080:192.168.1.1:80 benutzername@<span class="text-red-500"
+              >hostname_or_ip</span
+            >
+          </div>
+          <p class="mt-2 text-sm text-gray-500">
+            Dies leitet deinen lokalen Port <code>8080</code> auf die IP-Adresse
+            <code>192.168.1.1</code> (Router) und den Port
+            <code>80</code> weiter.
+          </p>
         </div>
-        <p class="mt-2 text-sm text-gray-500">Dies leitet deinen lokalen Port <code>8080</code> auf die IP-Adresse <code>192.168.1.1</code> (Router) und den Port <code>80</code> weiter.</p>
-      </div>
-    </section>
+      </section>
 
-    <section>
-      <h2 class="text-2xl font-semibold text-gray-800 mb-4">3. Geräte im Netzwerk scannen</h2>
-      <div class="bg-white shadow rounded-lg p-6 mb-6">
-        <p class="text-gray-700 mb-2">Mit <code>nmap</code> kannst du herausfinden, welche Geräte im Netzwerk aktiv sind:</p>
-        <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-          nmap -sn 192.168.1.0/24
+      <section>
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+          3. Geräte im Netzwerk scannen
+        </h2>
+        <div class="bg-white shadow rounded-lg p-6 mb-6">
+          <p class="text-gray-700 mb-2">
+            Mit <code>nmap</code> kannst du herausfinden, welche Geräte im
+            Netzwerk aktiv sind:
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            nmap -sn 192.168.1.0/24
+          </div>
+          <p class="mt-2 text-sm text-gray-500">
+            Dieser Befehl führt einen Ping-Scan durch und zeigt alle aktiven
+            Geräte im Netzwerk an.
+          </p>
         </div>
-        <p class="mt-2 text-sm text-gray-500">Dieser Befehl führt einen Ping-Scan durch und zeigt alle aktiven Geräte im Netzwerk an.</p>
-      </div>
-    </section>
+      </section>
 
-    <section>
-      <h2 class="text-2xl font-semibold text-gray-800 mb-4">4. Lokale Ports prüfen</h2>
-      <div class="bg-white shadow rounded-lg p-6 mb-6">
-        <p class="text-gray-700 mb-2">Überprüfe, ob ein bestimmter Port auf deinem Raspberry Pi aktiv ist:</p>
-        <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-          sudo netstat -tuln | grep <span class="text-red-500">portnummer</span>
+      <section>
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+          4. Lokale Ports prüfen
+        </h2>
+        <div class="bg-white shadow rounded-lg p-6 mb-6">
+          <p class="text-gray-700 mb-2">
+            Überprüfe, ob ein bestimmter Port auf deinem Raspberry Pi aktiv ist:
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            sudo netstat -tuln | grep
+            <span class="text-red-500">portnummer</span>
+          </div>
+          <p class="mt-2 text-sm text-gray-500">
+            Dieser Befehl zeigt alle laufenden Dienste und den Status des Ports
+            an.
+          </p>
         </div>
-        <p class="mt-2 text-sm text-gray-500">Dieser Befehl zeigt alle laufenden Dienste und den Status des Ports an.</p>
-      </div>
-    </section>
-    <section>
-  <h2 class="text-2xl font-semibold text-gray-800 mb-4">5. Öffentliche IP-Adresse anzeigen</h2>
-  <div class="bg-white shadow rounded-lg p-6 mb-6">
-    <p class="text-gray-700 mb-2">Mit diesem Befehl kannst du die öffentliche IPv4-Adresse deines Geräts anzeigen:</p>
-    <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-      curl ifconfig.me
-    </div>
-    <p class="text-sm text-gray-500 mt-2">Für explizite IPv4-Abfrage:</p>
-    <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-      curl -4 ifconfig.me
-    </div>
-  </div>
-</section>
+      </section>
+      <section>
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+          5. Öffentliche IP-Adresse anzeigen
+        </h2>
+        <div class="bg-white shadow rounded-lg p-6 mb-6">
+          <p class="text-gray-700 mb-2">
+            Mit diesem Befehl kannst du die öffentliche IPv4-Adresse deines
+            Geräts anzeigen:
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            curl ifconfig.me
+          </div>
+          <p class="text-sm text-gray-500 mt-2">Für explizite IPv4-Abfrage:</p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            curl -4 ifconfig.me
+          </div>
+        </div>
+      </section>
 
-<section>
-  <h2 class="text-2xl font-semibold text-gray-800 mb-4">6. Daten von APIs abrufen</h2>
-  <div class="bg-white shadow rounded-lg p-6 mb-6">
-    <p class="text-gray-700 mb-2">JSON-Daten von einer API abrufen und mit <code>jq</code> formatieren:</p>
-    <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-      curl "https://jsonplaceholder.typicode.com/todos/1" | jq
-    </div>
-    <p class="text-gray-700 mt-4">API-Daten herunterladen und in einer Datei speichern:</p>
-    <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-      curl -X GET "https://api.example.com/data" -o wetter.json
-    </div>
-    <p class="text-gray-700 mt-4">Den Inhalt der Datei anzeigen:</p>
-    <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-      cat wetter.json
-    </div>
-    <p class="text-gray-700 mt-4">API-Daten mit Parametern abrufen und speichern:</p>
-    <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-      curl "https://api.example.com/data?param1=wert1&param2=wert2" -o ergebnisse.json
-    </div>
-    <p class="text-gray-700 mt-4">API-Daten mit Autorisierung abrufen:</p>
-    <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-      curl -H "Authorization: Bearer YOUR_API_KEY" "https://api.example.com/data" -o ergebnisse.json
-    </div>
-    <p class="text-gray-700 mt-4">Alternative Syntax zum Speichern:</p>
-    <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-      curl "https://api.example.com/data" > ergebnisse.json
-    </div>
-  </div>
-</section>
+      <section>
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+          6. Daten von APIs abrufen
+        </h2>
+        <div class="bg-white shadow rounded-lg p-6 mb-6">
+          <p class="text-gray-700 mb-2">
+            JSON-Daten von einer API abrufen und mit
+            <code>jq</code> formatieren:
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            curl "https://jsonplaceholder.typicode.com/todos/1" | jq
+          </div>
+          <p class="text-gray-700 mt-4">
+            API-Daten herunterladen und in einer Datei speichern:
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            curl -X GET "https://api.example.com/data" -o wetter.json
+          </div>
+          <p class="text-gray-700 mt-4">Den Inhalt der Datei anzeigen:</p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            cat wetter.json
+          </div>
+          <p class="text-gray-700 mt-4">
+            API-Daten mit Parametern abrufen und speichern:
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            curl "https://api.example.com/data?param1=wert1&param2=wert2" -o
+            ergebnisse.json
+          </div>
+          <p class="text-gray-700 mt-4">API-Daten mit Autorisierung abrufen:</p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            curl -H "Authorization: Bearer YOUR_API_KEY"
+            "https://api.example.com/data" -o ergebnisse.json
+          </div>
+          <p class="text-gray-700 mt-4">Alternative Syntax zum Speichern:</p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            curl "https://api.example.com/data" > ergebnisse.json
+          </div>
+        </div>
+      </section>
 
-<section>
-  <h2 class="text-2xl font-semibold text-gray-800 mb-4">7. JSON-Dateien analysieren mit jq</h2>
-  <div class="bg-white shadow rounded-lg p-6 mb-6">
-    <p class="text-gray-700 mb-2">Alle Schlüssel in einer JSON-Datei anzeigen:</p>
-    <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-      jq 'keys' example.json
+      <section>
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+          7. JSON-Dateien analysieren mit jq
+        </h2>
+        <div class="bg-white shadow rounded-lg p-6 mb-6">
+          <p class="text-gray-700 mb-2">
+            Alle Schlüssel in einer JSON-Datei anzeigen:
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            jq 'keys' example.json
+          </div>
+          <p class="text-gray-700 mt-4">
+            Die Schlüssel des ersten Elements in einem Array anzeigen:
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            jq '.[0] | keys' example.json
+          </div>
+          <p class="text-gray-700 mt-4">
+            Alle Pfade in einer JSON-Datei anzeigen:
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            jq 'paths | map(tostring) | join(".")' example.json
+          </div>
+          <p class="text-gray-700 mt-4">
+            Alle Objekte in einer JSON-Datei iterieren:
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            jq '.[]' example.json
+          </div>
+          <p class="text-gray-700 mt-4">
+            JSON-Daten in Schlüssel-Wert-Paare umwandeln:
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            jq 'to_entries[]' example.json
+          </div>
+          <p class="text-gray-700 mt-4">
+            Schlüssel-Wert-Paare mit String-Ausgabe:
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            jq -r 'to_entries[] | "\(.key): \(.value)"' example.json
+          </div>
+          <p class="text-gray-700 mt-4">Pfade und Werte anzeigen:</p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            jq 'paths | join(".") as $p | getpath($p) | "\($p): \(.)"'
+            example.json
+          </div>
+        </div>
+      </section>
+      <section>
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+          8. Wichtige Befehle für Raspberry Pi und Linux
+        </h2>
+
+        <div class="bg-white shadow rounded-lg p-6 mb-6">
+          <h3 class="text-xl font-semibold text-gray-700 mb-4">
+            Benutzerverwaltung
+          </h3>
+          <p class="text-gray-700 mb-2">
+            Liste alle Benutzer deines Systems auf:
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            cat /etc/passwd
+          </div>
+          <p class="text-gray-700 mt-4">
+            Zeige den aktuell eingeloggten Benutzer an:
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            whoami
+          </div>
+        </div>
+
+        <div class="bg-white shadow rounded-lg p-6 mb-6">
+          <h3 class="text-xl font-semibold text-gray-700 mb-4">
+            Dateien und Besitzrechte
+          </h3>
+          <p class="text-gray-700 mb-2">
+            Prüfe die Besitzrechte und Details von Dateien:
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            ls -l
+          </div>
+          <p class="text-gray-700 mt-4">
+            Ändere den Besitzer eines Ordners oder einer Datei (rekursiv):
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            sudo chown -R benutzername:benutzername pfad
+          </div>
+        </div>
+
+        <div class="bg-white shadow rounded-lg p-6 mb-6">
+          <h3 class="text-xl font-semibold text-gray-700 mb-4">Git-Befehle</h3>
+          <p class="text-gray-700 mb-2">
+            Zeige die aktuelle Git-Konfiguration an (z. B. Benutzername und
+            E-Mail):
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            git config --list
+          </div>
+        </div>
+
+        <div class="bg-white shadow rounded-lg p-6 mb-6">
+          <h3 class="text-xl font-semibold text-gray-700 mb-4">
+            SSH und Schlüsselmanagement
+          </h3>
+          <p class="text-gray-700 mb-2">
+            Prüfe, ob der Ordner `.ssh` existiert und ob er versteckt ist:
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            ls -ld ~/.ssh
+          </div>
+          <p class="text-gray-700 mt-4">
+            Suche nach einem SSH-Schlüssel auf deinem System:
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            find ~ -name "id_ed25519*"
+          </div>
+          <p class="text-gray-700 mt-4">Erstelle einen neuen SSH-Schlüssel:</p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            ssh-keygen -t ed25519 -C "deine-email@example.com"
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+          9. Weitere nützliche Raspberry Pi Linux-Befehle
+        </h2>
+        <div class="bg-white shadow rounded-lg p-6 mb-6">
+          <p class="text-gray-700 mb-2">
+            Zeigt die Verzeichnisstruktur eines Ordners in einer hierarchischen
+            Baumansicht an.
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            tree
+          </div>
+          <p class="text-gray-700 mt-4">
+            Zeigt die aktuellen Einstellungen der Wireless-Netzwerkkarte an (z.
+            B. ESSID, Frequenz, Signalstärke).
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            <code>sudo iwconfig</code>
+          </div>
+          <p class="text-gray-700 mt-4">
+            Listet alle angeschlossenen USB-Geräte auf.
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            <code>lsusb</code>
+          </div>
+          <p class="text-gray-700 mt-4">
+            Nmap: Syn-Scan. Führt einen TCP-SYN-Scan auf die IP-Adresse
+            192.168.1.1 aus, um offene Ports zu erkennen.
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            <code>sudo nmap -sS 192.168.1.1</code>
+          </div>
+          <p class="text-gray-700 mt-4">
+            Nmap: Bestimmte Ports scannen. Scannt die Ports 80, 139 und 515 der
+            IP-Adresse 192.168.1.1
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            <code>nmap -p 80,139,515 192.168.1.1</code>
+          </div>
+          <p class="text-gray-700 mt-4">
+            Nmap: Netzwerksubnetz scannen. Scannt die Ports 80 und 515 für alle
+            Geräte im Subnetz 192.168.1.0/24.
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            <code>nmap -p 80,515 192.168.1.0/24</code>
+          </div>
+
+          <p class="text-gray-700 mt-4">
+            Nmap: Umfassender Scan. Führt einen umfassenden Scan der IP-Adresse
+            192.168.1.1 aus und sammelt Systeminformationen.
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            <code>nmap -A 192.168.1.1</code>
+          </div>
+
+          <p class="text-gray-700 mt-4">
+            Dateien verschieben.Verschiebt Dateien oder Ordner von einer Quelle
+            zu einem Ziel. Beispiele:
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            <code>mv [optionen] quelle ziel ||</code>
+            <code>mv test.txt /home/user/Documents</code>
+          </div>
+        </div>
+      </section>
+
+      <footer class="text-center text-gray-600 mt-12">
+        <p>
+          Erstellt von
+          <a href="http://www.millionpainter.de" target="_blank"
+            >Millionpainter</a
+          >
+          mit love & <span class="text-blue-600">Tailwind CSS</span>
+        </p>
+      </footer>
     </div>
-    <p class="text-gray-700 mt-4">Die Schlüssel des ersten Elements in einem Array anzeigen:</p>
-    <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-      jq '.[0] | keys' example.json
-    </div>
-    <p class="text-gray-700 mt-4">Alle Pfade in einer JSON-Datei anzeigen:</p>
-    <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-      jq 'paths | map(tostring) | join(".")' example.json
-    </div>
-    <p class="text-gray-700 mt-4">Alle Objekte in einer JSON-Datei iterieren:</p>
-    <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-      jq '.[]' example.json
-    </div>
-    <p class="text-gray-700 mt-4">JSON-Daten in Schlüssel-Wert-Paare umwandeln:</p>
-    <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-      jq 'to_entries[]' example.json
-    </div>
-    <p class="text-gray-700 mt-4">Schlüssel-Wert-Paare mit String-Ausgabe:</p>
-    <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-      jq -r 'to_entries[] | "\(.key): \(.value)"' example.json
-    </div>
-    <p class="text-gray-700 mt-4">Pfade und Werte anzeigen:</p>
-    <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-      jq 'paths | join(".") as $p | getpath($p) | "\($p): \(.)"' example.json
-    </div>
-  </div>
-</section>
-<section>
-  <h2 class="text-2xl font-semibold text-gray-800 mb-4">8. Wichtige Befehle für Raspberry Pi und Linux</h2>
-
-  <div class="bg-white shadow rounded-lg p-6 mb-6">
-    <h3 class="text-xl font-semibold text-gray-700 mb-4">Benutzerverwaltung</h3>
-    <p class="text-gray-700 mb-2">Liste alle Benutzer deines Systems auf:</p>
-    <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-      cat /etc/passwd
-    </div>
-    <p class="text-gray-700 mt-4">Zeige den aktuell eingeloggten Benutzer an:</p>
-    <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-      whoami
-    </div>
-  </div>
-
-  <div class="bg-white shadow rounded-lg p-6 mb-6">
-    <h3 class="text-xl font-semibold text-gray-700 mb-4">Dateien und Besitzrechte</h3>
-    <p class="text-gray-700 mb-2">Prüfe die Besitzrechte und Details von Dateien:</p>
-    <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-      ls -l
-    </div>
-    <p class="text-gray-700 mt-4">Ändere den Besitzer eines Ordners oder einer Datei (rekursiv):</p>
-    <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-      sudo chown -R benutzername:benutzername pfad
-    </div>
-  </div>
-
-  <div class="bg-white shadow rounded-lg p-6 mb-6">
-    <h3 class="text-xl font-semibold text-gray-700 mb-4">Git-Befehle</h3>
-    <p class="text-gray-700 mb-2">Zeige die aktuelle Git-Konfiguration an (z. B. Benutzername und E-Mail):</p>
-    <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-      git config --list
-    </div>
-  </div>
-
-  <div class="bg-white shadow rounded-lg p-6 mb-6">
-    <h3 class="text-xl font-semibold text-gray-700 mb-4">SSH und Schlüsselmanagement</h3>
-    <p class="text-gray-700 mb-2">Prüfe, ob der Ordner `.ssh` existiert und ob er versteckt ist:</p>
-    <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-      ls -ld ~/.ssh
-    </div>
-    <p class="text-gray-700 mt-4">Suche nach einem SSH-Schlüssel auf deinem System:</p>
-    <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-      find ~ -name "id_ed25519*"
-    </div>
-    <p class="text-gray-700 mt-4">Erstelle einen neuen SSH-Schlüssel:</p>
-    <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-      ssh-keygen -t ed25519 -C "deine-email@example.com"
-    </div>
-  </div>
-</section>
-<section id="raspi-linux-commands">
-  <h2>Weitere nützliche Raspberry Pi Linux-Befehle</h2>
-
-  <article>
-    <h3>Tree</h3>
-    <p><code>tree</code></p>
-    <p>Zeigt die Verzeichnisstruktur eines Ordners in einer hierarchischen Baumansicht an.</p>
-  </article>
-
-  <article>
-    <h3>WiFi-Einstellungen anzeigen</h3>
-    <p><code>sudo iwconfig</code></p>
-    <p>Zeigt die aktuellen Einstellungen der Wireless-Netzwerkkarte an (z. B. ESSID, Frequenz, Signalstärke).</p>
-  </article>
-
-  <article>
-    <h3>USB-Geräte auflisten</h3>
-    <p><code>lsusb</code></p>
-    <p>Listet alle angeschlossenen USB-Geräte auf.</p>
-  </article>
-
-  <article>
-    <h3>Nmap: Syn-Scan</h3>
-    <p><code>sudo nmap -sS 192.168.1.1</code></p>
-    <p>Führt einen TCP-SYN-Scan auf die IP-Adresse 192.168.1.1 aus, um offene Ports zu erkennen.</p>
-  </article>
-
-  <article>
-    <h3>Nmap: Bestimmte Ports scannen</h3>
-    <p><code>nmap -p 80,139,515 192.168.1.1</code></p>
-    <p>Scannt die Ports 80, 139 und 515 der IP-Adresse 192.168.1.1.</p>
-  </article>
-
-  <article>
-    <h3>Nmap: Netzwerksubnetz scannen</h3>
-    <p><code>nmap -p 80,515 192.168.1.0/24</code></p>
-    <p>Scannt die Ports 80 und 515 für alle Geräte im Subnetz 192.168.1.0/24.</p>
-  </article>
-
-  <article>
-    <h3>Nmap: Umfassender Scan</h3>
-    <p><code>nmap -A 192.168.1.1</code></p>
-    <p>Führt einen umfassenden Scan der IP-Adresse 192.168.1.1 aus und sammelt Systeminformationen.</p>
-  </article>
-
-  <article>
-    <h3>Dateien verschieben</h3>
-    <p><code>mv [optionen] quelle ziel</code></p>
-    <p>Verschiebt Dateien oder Ordner von einer Quelle zu einem Ziel. Beispiel:</p>
-    <p><code>mv test.txt /home/user/Documents</code></p>
-    <p>Verschiebt die Datei <code>test.txt</code> in den Ordner <code>/home/user/Documents</code>.</p>
-  </article>
-
-</section>
-
-
-    <footer class="text-center text-gray-600 mt-12">
-      <p>Erstellt von <a href="http://www.millionpainter.de" target="_blank">Millionpainter</a> mit love & <span class="text-blue-600">Tailwind CSS</span></p>
-    </footer>
-  </div>
-</body>
-
+  </body>
 </html>
