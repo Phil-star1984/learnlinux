@@ -343,6 +343,53 @@
             <code>mv [optionen] quelle ziel ||</code>
             <code>mv test.txt /home/user/Documents</code>
           </div>
+
+          <p class="text-gray-700 mt-4">Beende eine SSH-Session. Beispiele:</p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            <code>exit ||</code>
+            Mit der Tastenkombination <strong>Ctrl+D</strong>
+          </div>
+
+          <p class="text-gray-700 mt-4">
+            Beende SSH mit einer Escape-Sequenz, ohne den gesamten Prozess zu
+            unterbrechen:
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            <code>~.</code>
+          </div>
+
+          <p class="text-gray-700 mt-4">
+            Bearbeite die SSH-Konfigurationsdatei, um Einstellungen wie den Port
+            oder die Authentifizierung zu ändern:
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            <code>sudo nano /etc/ssh/sshd_config</code>
+          </div>
+
+          <p class="text-gray-700 mt-4">
+            Ändere den Standardport für SSH-Verbindungen:
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            <code>Port 2222</code>
+          </div>
+
+          <p class="text-gray-700 mt-4">
+            Deaktiviere die Passwort-Authentifizierung für SSH und verwende
+            stattdessen SSH-Schlüssel:
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            <code>PasswordAuthentication no</code>
+          </div>
+
+          <p class="text-gray-700 mt-4">
+            Sende eine Nachricht an die Konsole eines anderen Geräts über SSH:
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            <code
+              >echo "Hallo, Raspberry Pi!" | ssh pi@&lt;RaspberryPi-IP&gt; "cat
+              > /dev/tty1"</code
+            >
+          </div>
         </div>
       </section>
 
