@@ -393,6 +393,56 @@
         </div>
       </section>
 
+      <section>
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
+          10. Einen neuen Linux-User anlegen und verwalten
+        </h2>
+        <div class="bg-white shadow rounded-lg p-6 mb-6">
+          <p class="text-gray-700 mb-2">
+            Mit diesen Befehlen kannst du auf deinem Raspberry Pi (oder einem
+            anderen Linux-System) einen neuen Benutzer anlegen, Berechtigungen
+            vergeben und Benutzer verwalten.
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            sudo adduser neueruser
+          </div>
+          <p class="text-gray-700 mt-4">
+            Fügt den neuen Benutzer <span class="font-mono">neueruser</span> zur
+            Sudo-Gruppe hinzu, damit er administrative Berechtigungen erhält.
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            sudo usermod -aG sudo neueruser
+          </div>
+          <p class="text-gray-700 mt-4">Wechsle zum neu erstellten Benutzer:</p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            su - neueruser
+          </div>
+          <p class="text-gray-700 mt-4">
+            Um den neuen Benutzer per SSH zu verwenden, melde dich so an:
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            ssh neueruser@<span class="font-mono">&lt;IP-Adresse&gt;</span>
+          </div>
+          <p class="text-gray-700 mt-4">
+            Optional: Ändere den Besitzer der Home-Verzeichnisse des Benutzers,
+            falls erforderlich.
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            sudo chown -R neueruser:neueruser /home/neueruser
+          </div>
+          <p class="text-gray-700 mt-4">
+            Lösche einen Benutzer, falls er nicht mehr benötigt wird:
+          </p>
+          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
+            sudo deluser neueruser
+          </div>
+          <p class="text-gray-700 mt-4">
+            Mit diesen Befehlen kannst du Benutzer auf deinem Raspberry Pi
+            einfach hinzufügen, verwalten und bei Bedarf auch entfernen.
+          </p>
+        </div>
+      </section>
+
       <footer class="text-center text-gray-600 mt-12">
         <p>
           Erstellt von
