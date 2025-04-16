@@ -9,21 +9,38 @@
       @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
       body {
         font-family: 'Share Tech Mono', monospace;
+        background: #000;
+        color: #0f0;
       }
       .matrix-bg {
-        background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
-                    url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjMDAwMDAwIj48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDVMNSAwWk02IDRMNCA2Wk0tMSAxTDEgLTFaIiBzdHJva2U9IiMxZDFlMWYiIHN0cm9rZS13aWR0aD0iMSI+PC9wYXRoPgo8L3N2Zz4=');
+        background: #000;
+        position: relative;
+      }
+      .matrix-bg::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+          linear-gradient(rgba(0, 15, 0, 0.2) 50%, rgba(0, 0, 0, 0.9) 50%),
+          linear-gradient(90deg, rgba(0, 255, 0, 0.03), rgba(0, 255, 0, 0.03) 3px, transparent 3px);
+        background-size: 100% 4px, 4px 100%;
+        pointer-events: none;
+        opacity: 0.2;
       }
       .terminal-window {
-        border: 0.8px solid rgba(0, 255, 0, 0.5);
-        border-radius: 0.2rem;
-        box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);
-        background: transparent;
+        border: 1px solid #0f0;
+        border-radius: 4px;
+        box-shadow: 0 0 15px rgba(0, 255, 0, 0.15);
+        background: rgba(0, 10, 0, 0.95);
         margin-bottom: 2rem;
+        overflow: hidden;
       }
       .terminal-header {
-        background: transparent;
-        border-bottom: 0.8px solid rgba(0, 255, 0, 0.5);
+        background: rgba(0, 20, 0, 0.95);
+        border-bottom: 1px solid #0f0;
         padding: 0.5rem 1rem;
       }
       .terminal-content {
@@ -42,88 +59,103 @@
         padding: 1rem;
         margin: 1rem 0;
         position: relative;
-        transition: all 0.3s ease;
-      }
-      .command-block:hover {
-        box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);
       }
       .terminal-command {
-        background: rgba(0, 0, 0, 0.3);
-        border: 0.8px solid rgba(0, 255, 0, 0.5);
-        border-radius: 0.25rem;
+        background: rgba(0, 20, 0, 0.3);
+        border: 1px solid rgba(0, 255, 0, 0.2);
+        border-radius: 2px;
         padding: 0.75rem 1rem;
         margin: 0.5rem 0;
         font-family: 'Share Tech Mono', monospace;
-        color: #00ff00;
+        color: #0f0;
         position: relative;
         display: flex;
         align-items: center;
         justify-content: space-between;
       }
       .terminal-command:hover {
-        border-color: rgba(0, 255, 0, 0.5);
+        border-color: #0f0;
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);
       }
       .copy-button {
-        background: transparent;
-        border: 1px solid rgba(0, 255, 0, 0.3);
-        color: #00ff00;
-        padding: 0.25rem 0.5rem;
-        border-radius: 0.25rem;
+        background: rgba(0, 20, 0, 0.5);
+        border: 1px solid #0f0;
+        color: #0f0;
+        padding: 0.25rem 0.75rem;
+        border-radius: 2px;
         cursor: pointer;
-        font-size: 0.75rem;
-        opacity: 0.7;
+        font-size: 0.8rem;
+        font-family: 'Share Tech Mono', monospace;
         transition: all 0.2s ease;
       }
       .copy-button:hover {
-        opacity: 1;
-        border-color: rgba(0, 255, 0, 0.5);
+        background: rgba(0, 40, 0, 0.5);
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
       }
       .copy-button.copied {
         color: #00ff80;
         border-color: rgba(0, 255, 128, 0.5);
       }
       .terminal-title {
-        color: #00ff00;
-        font-size: 0.875rem;
+        color: #0f0;
+        font-size: 0.9rem;
         text-align: center;
         flex-grow: 1;
         font-family: 'Share Tech Mono', monospace;
+        text-transform: uppercase;
+        letter-spacing: 1px;
       }
       .primary-text { color: #00ff00; }
       .secondary-text { color: #00ff80; }
       .accent-text { color: #00ffff; }
       .warning-text { color: #ff8000; }
       .error-text { color: #ff0000; }
-      .matrix-text { color: #00ff00; }
-      .cyber-text { color: #00ffff; }
-      .hacker-text { color: #00ff80; }
+      .matrix-text {
+        color: #0f0;
+        font-weight: bold;
+      }
+      .cyber-text {
+        color: #0f0;
+        text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+      }
+      .hacker-text {
+        color: #0f0;
+        opacity: 0.9;
+      }
       .terminal-text { color: #00ff00; }
       .code-text { color: #00ff80; }
       .prompt-text { color: #00ffff; }
       .section-title {
-        position: relative;
-        display: inline-block;
+        color: #0f0;
+        font-size: 1.2rem;
         margin-bottom: 1.5rem;
+        border-bottom: 1px solid rgba(0, 255, 0, 0.2);
+        padding-bottom: 0.5rem;
       }
       .section-title::before {
         content: ">";
-        color: #00ff00;
+        color: #0f0;
         margin-right: 0.5rem;
       }
       .terminal-controls {
         display: flex;
         gap: 0.5rem;
-        margin-bottom: 0.5rem;
       }
       .terminal-control {
         width: 0.75rem;
         height: 0.75rem;
         border-radius: 50%;
-        border: 1px solid rgba(0, 255, 0, 0.5);
+        border: 1px solid rgba(0, 255, 0, 0.3);
       }
-      .terminal-control.close { border-color: rgba(255, 0, 0, 0.3); }
+      .terminal-control.close { border-color: rgba(255, 50, 50, 0.5); }
       .terminal-control.minimize { border-color: rgba(255, 255, 0, 0.5); }
-      .terminal-control.maximize { border-color: rgba(0, 255, 0, 0.3); }
+      .terminal-control.maximize { border-color: rgba(50, 255, 50, 0.5); }
+      code {
+        background: rgba(0, 20, 0, 0.3);
+        padding: 0.2rem 0.4rem;
+        border-radius: 2px;
+        border: 1px solid rgba(0, 255, 0, 0.2);
+      }
     </style>
   </head>
 
