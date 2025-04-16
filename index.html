@@ -5,453 +5,548 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SSH und Netzwerkzugriff lernen</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+      body {
+        font-family: 'Share Tech Mono', monospace;
+      }
+      .matrix-bg {
+        background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
+                    url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1IiBoZWlnaHQ9IjUiPgo8cmVjdCB3aWR0aD0iNSIgaGVpZ2h0PSI1IiBmaWxsPSIjMDAwMDAwIj48L3JlY3Q+CjxwYXRoIGQ9Ik0wIDVMNSAwWk02IDRMNCA2Wk0tMSAxTDEgLTFaIiBzdHJva2U9IiMxZDFlMWYiIHN0cm9rZS13aWR0aD0iMSI+PC9wYXRoPgo8L3N2Zz4=');
+      }
+      .terminal-window {
+        border: 0.8px solid rgba(0, 255, 0, 0.5);
+        border-radius: 0.2rem;
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);
+        background: transparent;
+        margin-bottom: 2rem;
+      }
+      .terminal-header {
+        background: transparent;
+        border-bottom: 0.8px solid rgba(0, 255, 0, 0.5);
+        padding: 0.5rem 1rem;
+      }
+      .terminal-content {
+        background: transparent;
+        padding: 1.5rem;
+      }
+      .blink {
+        animation: blink 1s step-end infinite;
+      }
+      @keyframes blink {
+        from, to { opacity: 1; }
+        50% { opacity: 0; }
+      }
+      .command-block {
+        background: transparent;
+        padding: 1rem;
+        margin: 1rem 0;
+        position: relative;
+        transition: all 0.3s ease;
+      }
+      .command-block:hover {
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.1);
+      }
+      .terminal-command {
+        background: rgba(0, 0, 0, 0.3);
+        border: 0.8px solid rgba(0, 255, 0, 0.5);
+        border-radius: 0.25rem;
+        padding: 0.75rem 1rem;
+        margin: 0.5rem 0;
+        font-family: 'Share Tech Mono', monospace;
+        color: #00ff00;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .terminal-command:hover {
+        border-color: rgba(0, 255, 0, 0.5);
+      }
+      .copy-button {
+        background: transparent;
+        border: 1px solid rgba(0, 255, 0, 0.3);
+        color: #00ff00;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        font-size: 0.75rem;
+        opacity: 0.7;
+        transition: all 0.2s ease;
+      }
+      .copy-button:hover {
+        opacity: 1;
+        border-color: rgba(0, 255, 0, 0.5);
+      }
+      .copy-button.copied {
+        color: #00ff80;
+        border-color: rgba(0, 255, 128, 0.5);
+      }
+      .terminal-title {
+        color: #00ff00;
+        font-size: 0.875rem;
+        text-align: center;
+        flex-grow: 1;
+        font-family: 'Share Tech Mono', monospace;
+      }
+      .primary-text { color: #00ff00; }
+      .secondary-text { color: #00ff80; }
+      .accent-text { color: #00ffff; }
+      .warning-text { color: #ff8000; }
+      .error-text { color: #ff0000; }
+      .matrix-text { color: #00ff00; }
+      .cyber-text { color: #00ffff; }
+      .hacker-text { color: #00ff80; }
+      .terminal-text { color: #00ff00; }
+      .code-text { color: #00ff80; }
+      .prompt-text { color: #00ffff; }
+      .section-title {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 1.5rem;
+      }
+      .section-title::before {
+        content: ">";
+        color: #00ff00;
+        margin-right: 0.5rem;
+      }
+      .terminal-controls {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+      .terminal-control {
+        width: 0.75rem;
+        height: 0.75rem;
+        border-radius: 50%;
+        border: 1px solid rgba(0, 255, 0, 0.5);
+      }
+      .terminal-control.close { border-color: rgba(255, 0, 0, 0.3); }
+      .terminal-control.minimize { border-color: rgba(255, 255, 0, 0.5); }
+      .terminal-control.maximize { border-color: rgba(0, 255, 0, 0.3); }
+    </style>
   </head>
 
-  <body class="bg-gray-100 text-gray-900 font-sans leading-relaxed">
+  <body class="matrix-bg text-green-500 min-h-screen">
     <div class="max-w-4xl mx-auto py-8 px-4">
-      <header class="text-center mb-8">
-        <h1 class="text-4xl font-bold text-blue-600">
-          SSH und Netzwerkzugriff lernen
+      <header class="text-center mb-12">
+        <h1 class="text-4xl font-bold matrix-text mb-2">
+          Linux Terminal Mastery: SSH & Netzwerk Grundlagen
         </h1>
-        <p class="text-lg text-gray-700">
-          Eine Übersicht der wichtigsten Befehle und Schritte
+        <p class="text-lg cyber-text">
+          > Wichtige Befehle und Techniken für sicheren Fernzugriff
         </p>
+        <div class="mt-4 text-green-500 text-sm">
+          <span class="blink">_</span>
+        </div>
       </header>
 
-      <section>
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
-          1. Verbindung per SSH herstellen
-        </h2>
-        <div class="bg-white shadow rounded-lg p-6 mb-6">
-          <p class="text-gray-700 mb-2">
-            Dieser Befehl ermöglicht es dir, eine Verbindung zu deinem Raspberry
-            Pi herzustellen:
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            ssh benutzername@<span class="text-red-500">hostname_or_ip</span>
+      <div class="space-y-8">
+        <div class="terminal-window">
+          <div class="terminal-header flex items-center">
+            <div class="terminal-controls">
+              <div class="terminal-control close"></div>
+              <div class="terminal-control minimize"></div>
+              <div class="terminal-control maximize"></div>
+            </div>
+            <div class="terminal-title">Grundlagen der SSH-Verbindung</div>
           </div>
-          <p class="mt-2 text-sm text-gray-500">
-            Ersetze <code>benutzername</code> durch deinen Benutzernamen und
-            <code>hostname_or_ip</code> durch die IP-Adresse oder den Hostnamen
-            des Raspberry Pi.
-          </p>
-        </div>
-      </section>
+          <div class="terminal-content">
+            <section>
+              <h2 class="text-2xl font-semibold cyber-text section-title">
+                1. SSH-Grundlagen und Verbindungsaufbau
+              </h2>
+              <div class="command-block">
+                <p class="hacker-text mb-2">
+                  Eine grundlegende SSH-Verbindung herstellen:
+                </p>
+                <div class="terminal-command">
+                  <span>ssh benutzername@<span class="warning-text">hostname_or_ip</span></span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'ssh benutzername@hostname_or_ip')">Copy</button>
+                </div>
+                <p class="mt-2 text-sm hacker-text">
+                  Ersetze <code class="cyber-text">benutzername</code> durch deinen Benutzernamen und
+                  <code class="cyber-text">hostname_or_ip</code> durch die IP-Adresse oder den Hostnamen
+                  des Zielsystems.
+                </p>
+              </div>
 
-      <section>
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
-          2. SSH-Tunnel einrichten
-        </h2>
-        <div class="bg-white shadow rounded-lg p-6 mb-6">
-          <p class="text-gray-700 mb-2">
-            Mit diesem Befehl kannst du einen SSH-Tunnel erstellen, um Zugriff
-            auf die Weboberfläche des Routers zu erhalten:
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            ssh -L 8080:192.168.1.1:80 benutzername@<span class="text-red-500"
-              >hostname_or_ip</span
-            >
-          </div>
-          <p class="mt-2 text-sm text-gray-500">
-            Dies leitet deinen lokalen Port <code>8080</code> auf die IP-Adresse
-            <code>192.168.1.1</code> (Router) und den Port
-            <code>80</code> weiter.
-          </p>
-        </div>
-      </section>
+              <div class="command-block">
+                <p class="hacker-text mb-2">
+                  SSH-Verbindung mit einem bestimmten Port:
+                </p>
+                <div class="terminal-command">
+                  <span>ssh -p <span class="warning-text">port</span> benutzername@<span class="warning-text">hostname_or_ip</span></span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'ssh -p port benutzername@hostname_or_ip')">Copy</button>
+                </div>
+              </div>
 
-      <section>
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
-          3. Geräte im Netzwerk scannen
-        </h2>
-        <div class="bg-white shadow rounded-lg p-6 mb-6">
-          <p class="text-gray-700 mb-2">
-            Mit <code>nmap</code> kannst du herausfinden, welche Geräte im
-            Netzwerk aktiv sind:
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            nmap -sn 192.168.1.0/24
-          </div>
-          <p class="mt-2 text-sm text-gray-500">
-            Dieser Befehl führt einen Ping-Scan durch und zeigt alle aktiven
-            Geräte im Netzwerk an.
-          </p>
-        </div>
-      </section>
-
-      <section>
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
-          4. Lokale Ports prüfen
-        </h2>
-        <div class="bg-white shadow rounded-lg p-6 mb-6">
-          <p class="text-gray-700 mb-2">
-            Überprüfe, ob ein bestimmter Port auf deinem Raspberry Pi aktiv ist:
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            sudo netstat -tuln | grep
-            <span class="text-red-500">portnummer</span>
-          </div>
-          <p class="mt-2 text-sm text-gray-500">
-            Dieser Befehl zeigt alle laufenden Dienste und den Status des Ports
-            an.
-          </p>
-        </div>
-      </section>
-      <section>
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
-          5. Öffentliche IP-Adresse anzeigen
-        </h2>
-        <div class="bg-white shadow rounded-lg p-6 mb-6">
-          <p class="text-gray-700 mb-2">
-            Mit diesem Befehl kannst du die öffentliche IPv4-Adresse deines
-            Geräts anzeigen:
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            curl ifconfig.me
-          </div>
-          <p class="text-sm text-gray-500 mt-2">Für explizite IPv4-Abfrage:</p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            curl -4 ifconfig.me
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
-          6. Daten von APIs abrufen
-        </h2>
-        <div class="bg-white shadow rounded-lg p-6 mb-6">
-          <p class="text-gray-700 mb-2">
-            JSON-Daten von einer API abrufen und mit
-            <code>jq</code> formatieren:
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            curl "https://jsonplaceholder.typicode.com/todos/1" | jq
-          </div>
-          <p class="text-gray-700 mt-4">
-            API-Daten herunterladen und in einer Datei speichern:
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            curl -X GET "https://api.example.com/data" -o wetter.json
-          </div>
-          <p class="text-gray-700 mt-4">Den Inhalt der Datei anzeigen:</p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            cat wetter.json
-          </div>
-          <p class="text-gray-700 mt-4">
-            API-Daten mit Parametern abrufen und speichern:
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            curl "https://api.example.com/data?param1=wert1&param2=wert2" -o
-            ergebnisse.json
-          </div>
-          <p class="text-gray-700 mt-4">API-Daten mit Autorisierung abrufen:</p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            curl -H "Authorization: Bearer YOUR_API_KEY"
-            "https://api.example.com/data" -o ergebnisse.json
-          </div>
-          <p class="text-gray-700 mt-4">Alternative Syntax zum Speichern:</p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            curl "https://api.example.com/data" > ergebnisse.json
-          </div>
-        </div>
-      </section>
-
-      <section>
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
-          7. JSON-Dateien analysieren mit jq
-        </h2>
-        <div class="bg-white shadow rounded-lg p-6 mb-6">
-          <p class="text-gray-700 mb-2">
-            Alle Schlüssel in einer JSON-Datei anzeigen:
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            jq 'keys' example.json
-          </div>
-          <p class="text-gray-700 mt-4">
-            Die Schlüssel des ersten Elements in einem Array anzeigen:
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            jq '.[0] | keys' example.json
-          </div>
-          <p class="text-gray-700 mt-4">
-            Alle Pfade in einer JSON-Datei anzeigen:
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            jq 'paths | map(tostring) | join(".")' example.json
-          </div>
-          <p class="text-gray-700 mt-4">
-            Alle Objekte in einer JSON-Datei iterieren:
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            jq '.[]' example.json
-          </div>
-          <p class="text-gray-700 mt-4">
-            JSON-Daten in Schlüssel-Wert-Paare umwandeln:
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            jq 'to_entries[]' example.json
-          </div>
-          <p class="text-gray-700 mt-4">
-            Schlüssel-Wert-Paare mit String-Ausgabe:
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            jq -r 'to_entries[] | "\(.key): \(.value)"' example.json
-          </div>
-          <p class="text-gray-700 mt-4">Pfade und Werte anzeigen:</p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            jq 'paths | join(".") as $p | getpath($p) | "\($p): \(.)"'
-            example.json
-          </div>
-        </div>
-      </section>
-      <section>
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
-          8. Wichtige Befehle für Raspberry Pi und Linux
-        </h2>
-
-        <div class="bg-white shadow rounded-lg p-6 mb-6">
-          <h3 class="text-xl font-semibold text-gray-700 mb-4">
-            Benutzerverwaltung
-          </h3>
-          <p class="text-gray-700 mb-2">
-            Liste alle Benutzer deines Systems auf:
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            cat /etc/passwd
-          </div>
-          <p class="text-gray-700 mt-4">
-            Zeige den aktuell eingeloggten Benutzer an:
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            whoami
+              <div class="command-block">
+                <p class="hacker-text mb-2">
+                  SSH-Verbindung beenden:
+                </p>
+                <div class="terminal-command">
+                  <span>exit</span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'exit')">Copy</button>
+                </div>
+                <p class="hacker-text mt-2">
+                  Alternativ: <strong class="hacker-text">Ctrl+D</strong>
+                </p>
+              </div>
+            </section>
           </div>
         </div>
 
-        <div class="bg-white shadow rounded-lg p-6 mb-6">
-          <h3 class="text-xl font-semibold text-gray-700 mb-4">
-            Dateien und Besitzrechte
-          </h3>
-          <p class="text-gray-700 mb-2">
-            Prüfe die Besitzrechte und Details von Dateien:
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            ls -l
+        <div class="terminal-window">
+          <div class="terminal-header flex items-center">
+            <div class="terminal-controls">
+              <div class="terminal-control close"></div>
+              <div class="terminal-control minimize"></div>
+              <div class="terminal-control maximize"></div>
+            </div>
+            <div class="terminal-title">SSH-Schlüssel und Sicherheit</div>
           </div>
-          <p class="text-gray-700 mt-4">
-            Ändere den Besitzer eines Ordners oder einer Datei (rekursiv):
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            sudo chown -R benutzername:benutzername pfad
+          <div class="terminal-content">
+            <section>
+              <h2 class="text-2xl font-semibold matrix-text section-title">
+                2. SSH-Schlüssel und Sicherheitskonfiguration
+              </h2>
+              <div class="command-block">
+                <p class="hacker-text mb-2">
+                  Einen neuen SSH-Schlüssel erstellen:
+                </p>
+                <div class="terminal-command">
+                  <span>ssh-keygen -t ed25519 -C "deine-email@example.com"</span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'ssh-keygen -t ed25519 -C \"deine-email@example.com\"')">Copy</button>
+                </div>
+              </div>
+
+              <div class="command-block">
+                <p class="hacker-text mb-2">
+                  SSH-Schlüssel auf dem System suchen:
+                </p>
+                <div class="terminal-command">
+                  <span>find ~ -name "id_ed25519*"</span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'find ~ -name \"id_ed25519*\"')">Copy</button>
+                </div>
+              </div>
+
+              <div class="command-block">
+                <p class="hacker-text mb-2">
+                  SSH-Konfigurationsdatei bearbeiten:
+                </p>
+                <div class="terminal-command">
+                  <span>sudo nano /etc/ssh/sshd_config</span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'sudo nano /etc/ssh/sshd_config')">Copy</button>
+                </div>
+              </div>
+
+              <div class="command-block">
+                <p class="hacker-text mb-2">
+                  SSH-Port ändern und Passwort-Authentifizierung deaktivieren:
+                </p>
+                <div class="terminal-command">
+                  <span>Port 2222</span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'Port 2222')">Copy</button>
+                </div>
+                <div class="terminal-command">
+                  <span>PasswordAuthentication no</span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'PasswordAuthentication no')">Copy</button>
+                </div>
+              </div>
+            </section>
           </div>
         </div>
 
-        <div class="bg-white shadow rounded-lg p-6 mb-6">
-          <h3 class="text-xl font-semibold text-gray-700 mb-4">Git-Befehle</h3>
-          <p class="text-gray-700 mb-2">
-            Zeige die aktuelle Git-Konfiguration an (z. B. Benutzername und
-            E-Mail):
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            git config --list
+        <div class="terminal-window">
+          <div class="terminal-header flex items-center">
+            <div class="terminal-controls">
+              <div class="terminal-control close"></div>
+              <div class="terminal-control minimize"></div>
+              <div class="terminal-control maximize"></div>
+            </div>
+            <div class="terminal-title">Netzwerk-Diagnose und Monitoring</div>
+          </div>
+          <div class="terminal-content">
+            <section>
+              <h2 class="text-2xl font-semibold cyber-text section-title">
+                3. Netzwerk-Diagnose und Monitoring
+              </h2>
+              <div class="command-block">
+                <p class="hacker-text mb-2">
+                  Geräte im Netzwerk scannen:
+                </p>
+                <div class="terminal-command">
+                  <span>nmap -sn 192.168.1.0/24</span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'nmap -sn 192.168.1.0/24')">Copy</button>
+                </div>
+              </div>
+
+              <div class="command-block">
+                <p class="hacker-text mb-2">
+                  Spezifische Ports scannen:
+                </p>
+                <div class="terminal-command">
+                  <span>nmap -p 80,139,515 192.168.1.1</span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'nmap -p 80,139,515 192.168.1.1')">Copy</button>
+                </div>
+              </div>
+
+              <div class="command-block">
+                <p class="hacker-text mb-2">
+                  Umfassender System-Scan:
+                </p>
+                <div class="terminal-command">
+                  <span>nmap -A 192.168.1.1</span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'nmap -A 192.168.1.1')">Copy</button>
+                </div>
+              </div>
+
+              <div class="command-block">
+                <p class="hacker-text mb-2">
+                  Öffentliche IP-Adresse anzeigen:
+                </p>
+                <div class="terminal-command">
+                  <span>curl ifconfig.me</span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'curl ifconfig.me')">Copy</button>
+                </div>
+              </div>
+            </section>
           </div>
         </div>
 
-        <div class="bg-white shadow rounded-lg p-6 mb-6">
-          <h3 class="text-xl font-semibold text-gray-700 mb-4">
-            SSH und Schlüsselmanagement
-          </h3>
-          <p class="text-gray-700 mb-2">
-            Prüfe, ob der Ordner `.ssh` existiert und ob er versteckt ist:
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            ls -ld ~/.ssh
+        <div class="terminal-window">
+          <div class="terminal-header flex items-center">
+            <div class="terminal-controls">
+              <div class="terminal-control close"></div>
+              <div class="terminal-control minimize"></div>
+              <div class="terminal-control maximize"></div>
+            </div>
+            <div class="terminal-title">API und Datenverarbeitung</div>
           </div>
-          <p class="text-gray-700 mt-4">
-            Suche nach einem SSH-Schlüssel auf deinem System:
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            find ~ -name "id_ed25519*"
-          </div>
-          <p class="text-gray-700 mt-4">Erstelle einen neuen SSH-Schlüssel:</p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            ssh-keygen -t ed25519 -C "deine-email@example.com"
+          <div class="terminal-content">
+            <section>
+              <h2 class="text-2xl font-semibold matrix-text section-title">
+                4. API-Zugriff und Datenverarbeitung
+              </h2>
+              <div class="command-block">
+                <p class="hacker-text mb-2">
+                  JSON-Daten von einer API abrufen:
+                </p>
+                <div class="terminal-command">
+                  <span>curl "https://jsonplaceholder.typicode.com/todos/1" | jq</span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'curl \"https://jsonplaceholder.typicode.com/todos/1\" | jq')">Copy</button>
+                </div>
+              </div>
+
+              <div class="command-block">
+                <p class="hacker-text mb-2">
+                  API-Daten mit Parametern abrufen:
+                </p>
+                <div class="terminal-command">
+                  <span>curl "https://api.example.com/data?param1=wert1&param2=wert2" -o ergebnisse.json</span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'curl \"https://api.example.com/data?param1=wert1&param2=wert2\" -o ergebnisse.json')">Copy</button>
+                </div>
+              </div>
+
+              <div class="command-block">
+                <p class="hacker-text mb-2">
+                  API-Daten mit Autorisierung abrufen:
+                </p>
+                <div class="terminal-command">
+                  <span>curl -H "Authorization: Bearer YOUR_API_KEY" "https://api.example.com/data" -o ergebnisse.json</span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'curl -H \"Authorization: Bearer YOUR_API_KEY\" \"https://api.example.com/data\" -o ergebnisse.json')">Copy</button>
+                </div>
+              </div>
+            </section>
           </div>
         </div>
-      </section>
 
-      <section>
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
-          9. Weitere nützliche Raspberry Pi Linux-Befehle
-        </h2>
-        <div class="bg-white shadow rounded-lg p-6 mb-6">
-          <p class="text-gray-700 mb-2">
-            Zeigt die Verzeichnisstruktur eines Ordners in einer hierarchischen
-            Baumansicht an.
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            tree
+        <div class="terminal-window">
+          <div class="terminal-header flex items-center">
+            <div class="terminal-controls">
+              <div class="terminal-control close"></div>
+              <div class="terminal-control minimize"></div>
+              <div class="terminal-control maximize"></div>
+            </div>
+            <div class="terminal-title">JSON-Verarbeitung mit jq</div>
           </div>
-          <p class="text-gray-700 mt-4">
-            Zeigt die aktuellen Einstellungen der Wireless-Netzwerkkarte an (z.
-            B. ESSID, Frequenz, Signalstärke).
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            <code>sudo iwconfig</code>
-          </div>
-          <p class="text-gray-700 mt-4">
-            Listet alle angeschlossenen USB-Geräte auf.
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            <code>lsusb</code>
-          </div>
-          <p class="text-gray-700 mt-4">
-            Nmap: Syn-Scan. Führt einen TCP-SYN-Scan auf die IP-Adresse
-            192.168.1.1 aus, um offene Ports zu erkennen.
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            <code>sudo nmap -sS 192.168.1.1</code>
-          </div>
-          <p class="text-gray-700 mt-4">
-            Nmap: Bestimmte Ports scannen. Scannt die Ports 80, 139 und 515 der
-            IP-Adresse 192.168.1.1
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            <code>nmap -p 80,139,515 192.168.1.1</code>
-          </div>
-          <p class="text-gray-700 mt-4">
-            Nmap: Netzwerksubnetz scannen. Scannt die Ports 80 und 515 für alle
-            Geräte im Subnetz 192.168.1.0/24.
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            <code>nmap -p 80,515 192.168.1.0/24</code>
-          </div>
+          <div class="terminal-content">
+            <section>
+              <h2 class="text-2xl font-semibold cyber-text section-title">
+                5. JSON-Daten mit jq verarbeiten
+              </h2>
+              <div class="command-block">
+                <p class="hacker-text mb-2">
+                  JSON-Struktur analysieren:
+                </p>
+                <div class="terminal-command">
+                  <span>jq 'keys' example.json</span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'jq \'keys\' example.json')">Copy</button>
+                </div>
+              </div>
 
-          <p class="text-gray-700 mt-4">
-            Nmap: Umfassender Scan. Führt einen umfassenden Scan der IP-Adresse
-            192.168.1.1 aus und sammelt Systeminformationen.
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            <code>nmap -A 192.168.1.1</code>
-          </div>
+              <div class="command-block">
+                <p class="hacker-text mb-2">
+                  JSON-Daten durchsuchen und formatieren:
+                </p>
+                <div class="terminal-command">
+                  <span>jq 'paths | map(tostring) | join(".")' example.json</span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'jq \'paths | map(tostring) | join(\".\")\' example.json')">Copy</button>
+                </div>
+              </div>
 
-          <p class="text-gray-700 mt-4">
-            Dateien verschieben.Verschiebt Dateien oder Ordner von einer Quelle
-            zu einem Ziel. Beispiele:
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            <code>mv [optionen] quelle ziel ||</code>
-            <code>mv test.txt /home/user/Documents</code>
-          </div>
-
-          <p class="text-gray-700 mt-4">Beende eine SSH-Session. Beispiele:</p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            <code>exit ||</code>
-            Mit der Tastenkombination <strong>Ctrl+D</strong>
-          </div>
-
-          <p class="text-gray-700 mt-4">
-            Beende SSH mit einer Escape-Sequenz, ohne den gesamten Prozess zu
-            unterbrechen:
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            <code>~.</code>
-          </div>
-
-          <p class="text-gray-700 mt-4">
-            Bearbeite die SSH-Konfigurationsdatei, um Einstellungen wie den Port
-            oder die Authentifizierung zu ändern:
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            <code>sudo nano /etc/ssh/sshd_config</code>
-          </div>
-
-          <p class="text-gray-700 mt-4">
-            Ändere den Standardport für SSH-Verbindungen:
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            <code>Port 2222</code>
-          </div>
-
-          <p class="text-gray-700 mt-4">
-            Deaktiviere die Passwort-Authentifizierung für SSH und verwende
-            stattdessen SSH-Schlüssel:
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            <code>PasswordAuthentication no</code>
-          </div>
-
-          <p class="text-gray-700 mt-4">
-            Sende eine Nachricht an die Konsole eines anderen Geräts über SSH:
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            <code
-              >echo "Hallo, Raspberry Pi!" | ssh pi@&lt;RaspberryPi-IP&gt; "cat
-              > /dev/tty1"</code
-            >
+              <div class="command-block">
+                <p class="hacker-text mb-2">
+                  JSON in Schlüssel-Wert-Paare umwandeln:
+                </p>
+                <div class="terminal-command">
+                  <span>jq -r 'to_entries[] | "\(.key): \(.value)"' example.json</span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'jq -r \'to_entries[] | \"\\(.key): \\(.value)\"\' example.json')">Copy</button>
+                </div>
+              </div>
+            </section>
           </div>
         </div>
-      </section>
 
-      <section>
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">
-          10. Einen neuen Linux-User anlegen und verwalten
-        </h2>
-        <div class="bg-white shadow rounded-lg p-6 mb-6">
-          <p class="text-gray-700 mb-2">
-            Mit diesen Befehlen kannst du auf deinem Raspberry Pi (oder einem
-            anderen Linux-System) einen neuen Benutzer anlegen, Berechtigungen
-            vergeben und Benutzer verwalten.
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            sudo adduser neueruser
+        <div class="terminal-window">
+          <div class="terminal-header flex items-center">
+            <div class="terminal-controls">
+              <div class="terminal-control close"></div>
+              <div class="terminal-control minimize"></div>
+              <div class="terminal-control maximize"></div>
+            </div>
+            <div class="terminal-title">System- und Benutzerverwaltung</div>
           </div>
-          <p class="text-gray-700 mt-4">
-            Fügt den neuen Benutzer <span class="font-mono">neueruser</span> zur
-            Sudo-Gruppe hinzu, damit er administrative Berechtigungen erhält.
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            sudo usermod -aG sudo neueruser
+          <div class="terminal-content">
+            <section>
+              <h2 class="text-2xl font-semibold matrix-text section-title">
+                6. System- und Benutzerverwaltung
+              </h2>
+              <div class="command-block">
+                <p class="hacker-text mb-2">
+                  Benutzer anzeigen und verwalten:
+                </p>
+                <div class="terminal-command">
+                  <span>cat /etc/passwd</span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'cat /etc/passwd')">Copy</button>
+                </div>
+                <div class="terminal-command">
+                  <span>whoami</span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'whoami')">Copy</button>
+                </div>
+              </div>
+
+              <div class="command-block">
+                <p class="hacker-text mb-2">
+                  Neuen Benutzer anlegen:
+                </p>
+                <div class="terminal-command">
+                  <span>sudo adduser neueruser</span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'sudo adduser neueruser')">Copy</button>
+                </div>
+                <div class="terminal-command">
+                  <span>sudo usermod -aG sudo neueruser</span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'sudo usermod -aG sudo neueruser')">Copy</button>
+                </div>
+              </div>
+
+              <div class="command-block">
+                <p class="hacker-text mb-2">
+                  Dateirechte und Besitz ändern:
+                </p>
+                <div class="terminal-command">
+                  <span>ls -l</span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'ls -l')">Copy</button>
+                </div>
+                <div class="terminal-command">
+                  <span>sudo chown -R benutzername:benutzername pfad</span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'sudo chown -R benutzername:benutzername pfad')">Copy</button>
+                </div>
+              </div>
+            </section>
           </div>
-          <p class="text-gray-700 mt-4">Wechsle zum neu erstellten Benutzer:</p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            su - neueruser
-          </div>
-          <p class="text-gray-700 mt-4">
-            Um den neuen Benutzer per SSH zu verwenden, melde dich so an:
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            ssh neueruser@<span class="font-mono">&lt;IP-Adresse&gt;</span>
-          </div>
-          <p class="text-gray-700 mt-4">
-            Optional: Ändere den Besitzer der Home-Verzeichnisse des Benutzers,
-            falls erforderlich.
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            sudo chown -R neueruser:neueruser /home/neueruser
-          </div>
-          <p class="text-gray-700 mt-4">
-            Lösche einen Benutzer, falls er nicht mehr benötigt wird:
-          </p>
-          <div class="bg-gray-100 text-blue-600 font-mono rounded p-4">
-            sudo deluser neueruser
-          </div>
-          <p class="text-gray-700 mt-4">
-            Mit diesen Befehlen kannst du Benutzer auf deinem Raspberry Pi
-            einfach hinzufügen, verwalten und bei Bedarf auch entfernen.
-          </p>
         </div>
-      </section>
 
-      <footer class="text-center text-gray-600 mt-12">
+        <div class="terminal-window">
+          <div class="terminal-header flex items-center">
+            <div class="terminal-controls">
+              <div class="terminal-control close"></div>
+              <div class="terminal-control minimize"></div>
+              <div class="terminal-control maximize"></div>
+            </div>
+            <div class="terminal-title">System-Diagnose und Hardware</div>
+          </div>
+          <div class="terminal-content">
+            <section>
+              <h2 class="text-2xl font-semibold cyber-text section-title">
+                7. System-Diagnose und Hardware-Informationen
+              </h2>
+              <div class="command-block">
+                <p class="hacker-text mb-2">
+                  Verzeichnisstruktur anzeigen:
+                </p>
+                <div class="terminal-command">
+                  <span>tree</span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'tree')">Copy</button>
+                </div>
+              </div>
+
+              <div class="command-block">
+                <p class="hacker-text mb-2">
+                  Netzwerk-Informationen:
+                </p>
+                <div class="terminal-command">
+                  <span>sudo iwconfig</span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'sudo iwconfig')">Copy</button>
+                </div>
+              </div>
+
+              <div class="command-block">
+                <p class="hacker-text mb-2">
+                  USB-Geräte anzeigen:
+                </p>
+                <div class="terminal-command">
+                  <span>lsusb</span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'lsusb')">Copy</button>
+                </div>
+              </div>
+
+              <div class="command-block">
+                <p class="hacker-text mb-2">
+                  Nachricht an System-Konsole senden:
+                </p>
+                <div class="terminal-command">
+                  <span>echo "Hallo, Raspberry Pi!" | ssh pi@&lt;RaspberryPi-IP&gt; "cat > /dev/tty1"</span>
+                  <button class="copy-button" onclick="copyToClipboard(this, 'echo \"Hallo, Raspberry Pi!\" | ssh pi@<RaspberryPi-IP> \"cat > /dev/tty1\"')">Copy</button>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+
+      <footer class="text-center text-green-600 mt-12 text-sm">
         <p>
-          Erstellt von
-          <a href="http://www.millionpainter.de" target="_blank"
-            >Millionpainter</a
-          >
-          mit love & <span class="text-blue-600">Tailwind CSS</span>
+          > Erstellt von
+          <a href="http://www.millionpainter.de" target="_blank" class="cyber-text hover:text-green-300">Millionpainter</a>
+          <span class="text-green-500">@</span>
+          <span class="matrix-text">matrix</span>
         </p>
       </footer>
     </div>
+
+    <script>
+      function copyToClipboard(button, text) {
+        navigator.clipboard.writeText(text).then(() => {
+          button.textContent = 'Copied!';
+          button.classList.add('copied');
+          setTimeout(() => {
+            button.textContent = 'Copy';
+            button.classList.remove('copied');
+          }, 2000);
+        });
+      }
+    </script>
   </body>
 </html>
